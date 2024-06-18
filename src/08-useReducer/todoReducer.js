@@ -5,7 +5,6 @@ export const todoReducer = ( initialState = [], action ) => {
             return [ ...initialState, action.payload ];
 
         case '[TODO] Remove Todo':
-            console.log(action)
             return initialState.filter( todo => todo.id !== action.payload );
 
         case '[TODO] Toggle Todo':

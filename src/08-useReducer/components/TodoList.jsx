@@ -7,7 +7,6 @@ export const TodoList = ( {todos = [], onDeleteTodo, onToggleTodo } ) => {
       <ul className='list-group'>
           {
               todos.map( todo => (
-                  // TodoItem
                   <TodoItem 
                         key= { todo.id } 
                         todo = { todo } 

@@ -1,55 +1,33 @@
+
+
 import { useCounter, useFetch } from '../hooks';
-import { LoadingMessage } from './LoadingMessage';
-import { PokemonCard } from './PokemonCard';
+import { LoadingQuote, Quote } from './';
+
 
 export const MultipleCustomHooks = () => {
-  
-    const { counter, decrement, increment } = useCounter(1); 
-    const { data, hasError, isLoading } = useFetch( `https://pokeapi.co/api/v2/pokemon/${ counter }` );
-          console.log(data);                                         
+
+    const { counter, increment } = useCounter(1);
+    const { data, isLoading, hasError } = useFetch(`https://www.breakingbadapi.com/api/quotes/${ counter }`);
+    const { author, quote } = !!data && data[0];
     
-  
-  
     return (
         <>
-            <h1>Información de Pokemon </h1>
-            <hr/>
+            <h1>BreakingBad Quotes</h1>
+            <hr />
 
-            { 
-            isLoading ?  
-            <LoadingMessage /> 
-            :(
-            <PokemonCard 
-                id= { counter } 
-                name={ data.name } 
-                sprites = { [
-                    data.sprites.front_default,  
-                    data.sprites.front_shiny,  
-                    data.sprites.back_default,  
-                    data.sprites.back_shiny,  
-                ]} 
-            
-            />
-            )
-            
+            {
+                isLoading
+                 ? <LoadingQuote />
+                 : <Quote author={ author } quote={ quote } />
             }
-            {/* <pre>{ JSON.stringify(data, null, 2) }</pre>  */}
-
-            <h2>{ data?.name } </h2>
-
-
+                      
             <button 
-                onClick={ () => counter > 1 ? decrement() : null }
-                
-                className ="btn btn-primary mt-2">
-                Anterior
+                className="btn btn-primary"
+                disabled={ isLoading }
+                onClick={ () => increment() }>
+                Next quote
             </button>
-            
-            <button 
-                onClick={ () => increment() }
-                className="btn btn-primary mt-2">
-                Siguiente
-            </button>
+
         </>
-  )
+    )
 }
